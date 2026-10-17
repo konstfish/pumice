@@ -249,7 +249,7 @@ body {
     /* Pele diagrams — map onto the nord-based ui theme so they follow light/dark */
     --pele-bg: transparent;
     --pele-fg: var(--text-main, #D8DEE9);
-    --pele-muted: var(--nord3, #4C566A);
+    --pele-muted: color-mix(in srgb, var(--text-main, #D8DEE9) 65%, var(--bg-main, #2E3440));
     --pele-line: var(--text-main, #D8DEE9);
     --pele-surface: var(--bg-sec, #3B4252);
     --pele-surface-alt: var(--bg-thr, #434C5E);

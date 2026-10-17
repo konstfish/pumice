@@ -1,6 +1,8 @@
 package assets
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"io"
 	"io/fs"
@@ -72,7 +74,13 @@ func (m *Manager) AddStaticAssetsToPage(page *ui.Page) error {
 			return nil
 		}
 
-		assetPath := m.basePath + "/_pumice/" + path
+		// Content hash in the query string so browsers drop a cached copy after a deploy
+		data, err := fs.ReadFile(static.Files, path)
+		if err != nil {
+			return err
+		}
+		sum := sha256.Sum256(data)
+		assetPath := m.basePath + "/_pumice/" + path + "?v=" + hex.EncodeToString(sum[:4])
 
 		if strings.HasSuffix(path, ".css") {
 			page.AddStyleSheet(assetPath)
