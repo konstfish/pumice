@@ -151,6 +151,38 @@
         hidePreview();
     });
 
+    // ── Diagrams (pele) ──────────────────────────────────────────
+
+    var PELE_SRC = 'https://cdn.jsdelivr.net/npm/pele@1.6.0/dist/pele.global.js';
+
+    function mountDiagrams(charts) {
+        charts.forEach(function (el) {
+            if (el.dataset.peleMounted) return;
+            el.dataset.peleMounted = '1';
+            pele.mount(el, el.textContent, { zoom: 'auto' });
+        });
+    }
+
+    function renderDiagrams(root) {
+        var charts = root.querySelectorAll('pre.mermaid');
+        if (charts.length === 0) return;
+        if (window.pele) {
+            mountDiagrams(charts);
+            return;
+        }
+        // Page reached via htmx swap: the script tag in <head> was never loaded
+        var s = document.createElement('script');
+        s.src = PELE_SRC;
+        s.onload = function () { mountDiagrams(charts); };
+        document.head.appendChild(s);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { renderDiagrams(document); });
+    } else {
+        renderDiagrams(document);
+    }
+
     // ── htmx navigation ──────────────────────────────────────────
 
     document.addEventListener('htmx:beforeSwap', function () {
@@ -168,20 +200,7 @@
             Prism.highlightAllUnder(content);
         }
 
-        var charts = content.querySelectorAll('.mermaid');
-        if (charts.length > 0) {
-            if (window.mermaid) {
-                mermaid.run({ nodes: charts });
-            } else {
-                var s = document.createElement('script');
-                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js';
-                s.onload = function () {
-                    mermaid.initialize({ startOnLoad: false });
-                    mermaid.run({ nodes: charts });
-                };
-                document.head.appendChild(s);
-            }
-        }
+        renderDiagrams(content);
 
         var title = content.getAttribute('data-title');
         if (title) {

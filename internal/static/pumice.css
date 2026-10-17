@@ -244,6 +244,27 @@ body {
     background: none;
     border: none;
     padding: 0;
+    overflow: visible;
+
+    /* Pele diagrams — map onto the nord-based ui theme so they follow light/dark */
+    --pele-bg: transparent;
+    --pele-fg: var(--text-main, #D8DEE9);
+    --pele-muted: var(--nord3, #4C566A);
+    --pele-line: var(--text-main, #D8DEE9);
+    --pele-surface: var(--bg-sec, #3B4252);
+    --pele-surface-alt: var(--bg-thr, #434C5E);
+    --pele-border: var(--nord3, #4C566A);
+    --pele-accent: var(--nord8, #88C0D0);
+    --pele-font: inherit;
+    --pele-radius: var(--inner-radius, 0.5rem);
+    --pele-series-1: var(--nord8, #88C0D0);
+    --pele-series-2: var(--nord14, #A3BE8C);
+    --pele-series-3: var(--nord15, #B48EAD);
+    --pele-series-4: var(--nord12, #D08770);
+    --pele-series-5: var(--nord13, #EBCB8B);
+    --pele-series-6: var(--nord10, #5E81AC);
+    --pele-series-7: var(--nord11, #BF616A);
+    --pele-series-8: var(--nord7, #8FBCBB);
 }
 
 /* Prism toolbar — minimal copy button */
