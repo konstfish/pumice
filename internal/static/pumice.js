@@ -34,6 +34,7 @@
         el.innerHTML = html;
         el.classList.remove('loading');
         el.classList.add('visible');
+        renderDiagrams(el);
         positionPreview(link, el);
     }
 
@@ -113,7 +114,7 @@
     }
 
     document.addEventListener('pointerenter', function (e) {
-        var link = e.target.closest('a[data-internal]');
+        var link = e.target.closest && e.target.closest('a[data-internal]');
         if (!link) return;
 
         currentLink = link;
@@ -126,7 +127,7 @@
     }, true);
 
     document.addEventListener('pointerleave', function (e) {
-        var link = e.target.closest('a[data-internal]');
+        var link = e.target.closest && e.target.closest('a[data-internal]');
         if (!link) return;
         hidePreview();
     }, true);
@@ -134,7 +135,7 @@
     // Also hide on click — covers the case where pointerleave never fires
     // because the link element gets removed by the outerHTML swap
     document.addEventListener('click', function (e) {
-        var link = e.target.closest('a[data-internal]');
+        var link = e.target.closest && e.target.closest('a[data-internal]');
         if (link) {
             hidePreview();
         }
