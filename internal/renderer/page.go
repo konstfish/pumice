@@ -387,12 +387,15 @@ func (pr *PageRenderer) renderGiscus() *ui.Element {
 	return wrapper
 }
 
+// peleScript renders ```mermaid blocks client-side (see pumice.js).
+const peleScript = "https://cdn.jsdelivr.net/npm/pele@1.6.0/dist/pele.global.js"
+
 func (pr *PageRenderer) addExternalAssets(page *ui.Page, htmlContent string) {
 	page.AddStyleSheet("https://cdn.jsdelivr.net/gh/konstfish/ui@0.0.2/static/main.css")
 	page.AddStyleSheet("https://cdn.jsdelivr.net/gh/konstfish/ui@0.0.2/static/prism.css")
 	// pumice.css is auto-added by assetManager.AddStaticAssetsToPage
 	if strings.Contains(htmlContent, `class="mermaid"`) {
-		page.AddScript("https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js")
+		page.AddScript(peleScript)
 	}
 	page.AddScript("https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.4/htmx.min.js")
 	page.AddScript("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js")
